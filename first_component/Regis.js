@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput, Image, ActivityIndicator} from 'react-native';
+import {StyleSheet, SafeAreaView, Text, View, TouchableOpacity, ScrollView, TextInput, Image, ActivityIndicator} from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import moment from "moment";
 
@@ -7,7 +7,8 @@ export default class FormSignUp extends Component {
   
   state = {
     isFocused: false,
-    date: ""
+    date: "",
+    showPassword: false
   }
 
   handleFocus = event => {
@@ -28,7 +29,8 @@ export default class FormSignUp extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+      {/* <View style={styles.container}> */}
       <ScrollView style={{height: "100%"}}>
 
       <View>
@@ -54,18 +56,12 @@ export default class FormSignUp extends Component {
             </View>
           </View>
 
-          <View style={{marginTop: 16}}>
+          <View style={{marginTop: 16, width: "100%"}}>
             <Text style={{fontSize: 9}}>
               Username
             </Text>
             <TextInput
                 style={styles.textInput}
-                selectionColor={"#000000"}
-                underlineColorAndroid={
-                  (this.state.isFocused) ? "#1ABC9C" : "#000000"
-                }
-                onFocus={this.handleFocus}
-                onBlur={this.handleBlur}
               />
           </View>
 
@@ -73,15 +69,23 @@ export default class FormSignUp extends Component {
             <Text style={{fontSize: 9}}>
               Password
             </Text>
-            <TextInput
-                style={styles.textInput}
-                selectionColor={"#000000"}
-                underlineColorAndroid={
-                  (this.state.isFocused) ? "#1ABC9C" : "#000000"
-                }
-                onFocus={this.handleFocus}
-                onBlur={this.handleBlur}
-              />
+            <View 
+            style={styles.textInput}>
+              <TextInput
+                style={{height: 40, width: "88%", paddingLeft: 10}}
+                  secureTextEntry={(this.state.showPassword === false) ? true : false}
+                />
+
+              <TouchableOpacity style={{height:25, width: 25}}
+                onPress= {() => (this.state.showPassword === false) ? this.setState({showPassword: true}) : this.setState({showPassword: false}) }
+              >
+                <Image
+                  style={{height: 20, width: 20, marginTop: 10, marginStart: 6}}
+                  source={(this.state.showPassword === true) ? require("../images/showpassword.png") : require("../images/hidepassword.png")}
+                />
+              </TouchableOpacity>
+            
+            </View>
           </View>
 
           <View style={{marginTop: 16}}>
@@ -89,7 +93,7 @@ export default class FormSignUp extends Component {
               Tanggal Lahir
             </Text>
               <DatePicker
-                style={{width: 200}}
+                style={{width: 200, marginTop: 15}}
                 date={this.state.date}
                 mode="date"
                 placeholder="select date"
@@ -113,10 +117,40 @@ export default class FormSignUp extends Component {
             />
           </View>
 
+          <View style={{marginTop: 15, marginBottom: 0}}>
+              <Text style={{fontSize: 9}}>
+                No Handphone
+              </Text>
+              <TextInput
+                 style={styles.textInputNoHp}
+                 placeholder={"08XXXXXXXXXX"}
+              />
+          </View>
+
+          <View style={{marginTop: 15, marginBottom: 0}}>
+              <Text style={{fontSize: 9}}>
+                Alamat
+              </Text>
+              <TextInput
+                 style={styles.textInputNoHp}
+                 placeholder={"Blok A-Z/nomor"}
+              />
+          </View>
+
         </View>
       </View>
       </ScrollView>
+      {/* </View> */}
+
+      <View style={{width: "100%", height: 40, backgroundColor: "#337AFF", alignItems: "center", justifyContent: "center"}}>
+        <TouchableOpacity>
+          <Text style={{color:"white"}}>
+            Daftar
+          </Text>
+        </TouchableOpacity>
       </View>
+
+      </SafeAreaView>
     );
   }
 }
@@ -126,25 +160,46 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     flexDirection: 'column',
+    justifyContent: "center",
+    alignItems: "center"
   },
   textInputNamaDepan:{
     height: 40,
     color:'#000000',
     backgroundColor: "#F0F0F0",
     borderRadius: 6,
-    paddingLeft: 6,
-    marginBottom:10,
+    paddingLeft: 10,
+    marginBottom:0,
     marginTop: 15,
     width:180
+  },
+  textInputNoHp:{
+    height: 40,
+    color:'#000000',
+    backgroundColor: "#F0F0F0",
+    borderRadius: 6,
+    paddingLeft: 10,
+    marginBottom:0,
+    marginTop: 15,
+    width:"100%"
   },
   textInput:{
     height: 40,
     color:'#000000',
+    flexDirection: "row",
+    backgroundColor: "#F0F0F0",
+    borderRadius: 6,
+    paddingLeft: 10,
+    marginBottom:0,
+    marginTop: 15,
+    width:"100%"
+  },
+  textInputPassword:{
+    height: 40,
+    color:'#000000',
     paddingLeft:10,
     paddingRight:10,
-    marginBottom:10,
-    marginTop: 8,
-    width:"100%"
+    width:"70%"
   },
   buttonStyle:{
     backgroundColor:'#1ABC9C',

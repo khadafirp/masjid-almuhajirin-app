@@ -18,14 +18,14 @@ const AppSwitchNavigator = createStackNavigator({
     {
       screen: Login,
       navigationOptions: {
-          header: null
+          headerShown: false
       }
     },
   regis: 
     {
       screen: Regis,
       navigationOptions: {
-          header: null
+          headerShown: false
       }
     }
 })

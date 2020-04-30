@@ -1,15 +1,17 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { SafeAreaView, View, Text } from 'react-native';
 
 export default class SplashScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.viewStyles}>
+      <SafeAreaView style={styles.viewStyles}>
+      {/* <View style={styles.viewStyles}> */}
         <Text style={styles.textStyles}>
           Blitz Reading
         </Text>
-      </View>
+      {/* </View> */}
+      </SafeAreaView>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import SplashScreen from './SplashScreen'
-import {StyleSheet, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
+import {StyleSheet, SafeAreaView, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native'
 import Regis from './Regis'
@@ -32,7 +32,8 @@ export default class Login extends Component {
       }else{
 
         return (
-          <View style={styles.container}>
+          <SafeAreaView style={styles.container}>
+          {/* <View style={styles.container}> */}
               {/* <Image style={{marginBottom:50, width:70, height:70}} source={require('./asset/icon-app.png')} /> */}
                   
               <TextInput 
@@ -56,7 +57,8 @@ export default class Login extends Component {
                   </Text>
               </TouchableOpacity>
               <Text style={styles.instructions}>Don’t have account? Register</Text>
-          </View>
+          {/* </View> */}
+          </SafeAreaView>
       );
           // return(
           //   <NavigationContainer>
