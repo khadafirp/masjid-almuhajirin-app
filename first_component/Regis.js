@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, SafeAreaView, Text, View, TouchableOpacity, ScrollView, TextInput, Image, ActivityIndicator} from 'react-native';
+import {StyleSheet, Alert, SafeAreaView, Text, View, TouchableOpacity, ScrollView, TextInput, Image, ActivityIndicator, ToastAndroid} from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import moment from "moment";
 
@@ -8,7 +8,9 @@ export default class FormSignUp extends Component {
   state = {
     isFocused: false,
     date: "",
-    showPassword: false
+    showPassword: false,
+    passwordText: "",
+    validasiPasswordText: ""
   }
 
   handleFocus = event => {
@@ -24,6 +26,12 @@ export default class FormSignUp extends Component {
 
     if(this.props.onBlur){
       this.props.onBlur(event)
+    }
+  }
+
+  validasiPassword = (passwordSatu, passwordDua) => {
+    if(passwordSatu !== passwordDua){
+      Alert.alert("Password tidak sama")
     }
   }
 
@@ -73,11 +81,40 @@ export default class FormSignUp extends Component {
             style={styles.textInput}>
               <TextInput
                 style={{height: 40, width: "88%", paddingLeft: 10}}
-                  secureTextEntry={(this.state.showPassword === false) ? true : false}
-                />
+                secureTextEntry={(this.state.showPassword === false) ? true : false}
+                onChangeText={(text) => this.setState({passwordText: text}), 
+                  console.log(this.state.passwordText)
+                }
+              />
 
               <TouchableOpacity style={{height:25, width: 25}}
                 onPress= {() => (this.state.showPassword === false) ? this.setState({showPassword: true}) : this.setState({showPassword: false}) }
+              >
+                <Image
+                  style={{height: 20, width: 20, marginTop: 10, marginStart: 6}}
+                  source={(this.state.showPassword === true) ? require("../images/showpassword.png") : require("../images/hidepassword.png")}
+                />
+              </TouchableOpacity>
+            
+            </View>
+          </View>
+
+          <View style={{marginTop: 16}}>
+            <Text style={{fontSize: 9}}>
+               Validasi Password
+            </Text>
+            <View 
+            style={styles.textInput}>
+              <TextInput
+                style={{height: 40, width: "88%", paddingLeft: 10}}
+                secureTextEntry={(this.state.showPassword === false) ? true : false}
+                onChangeText={(text) => this.setState({validasiPasswordText: text})}
+              />
+
+              <TouchableOpacity style={{height:25, width: 25}}
+                onPress= {() => 
+                  (this.state.showPassword === false) ? this.setState({showPassword: true}) : this.setState({showPassword: false}) 
+                }
               >
                 <Image
                   style={{height: 20, width: 20, marginTop: 10, marginStart: 6}}
@@ -143,7 +180,7 @@ export default class FormSignUp extends Component {
       {/* </View> */}
 
       <View style={{width: "100%", height: 40, backgroundColor: "#337AFF", alignItems: "center", justifyContent: "center"}}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => this.validasiPassword(this.state.passwordText, this.state.validasiPasswordText)}>
           <Text style={{color:"white"}}>
             Daftar
           </Text>
