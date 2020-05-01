@@ -7,6 +7,7 @@ export default class FormSignUp extends Component {
   
   state = {
     isFocused: false,
+    isLoading: false,
     date: "",
     showPassword: false,
     passwordText: "",
@@ -33,6 +34,33 @@ export default class FormSignUp extends Component {
     if(passwordSatu !== passwordDua){
       Alert.alert("Password tidak sama")
     }
+  }
+
+  fetchRegis = () => {
+    let formData = new FormData()
+    formData.append("username", "khadafi")
+
+    fetch('http://localhost:1000/api/regis', {
+      method: "POST",
+      body: formData
+    })
+
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.setState(
+        {
+          isLoading: false,
+          dataSource: responseJson
+        }, function (){
+          
+        }
+      )
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+
+    Alert.alert(this.state.dataSource)
   }
 
   render() {
