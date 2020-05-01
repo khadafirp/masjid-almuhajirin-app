@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, Text, Image, FlatList } from 'react-native';
+import { SafeAreaView, View, Text, Image, FlatList, ScrollView} from 'react-native';
 import { SliderBox } from "react-native-image-slider-box"
 
 export default class HomeScreen extends React.Component {
@@ -16,15 +16,15 @@ export default class HomeScreen extends React.Component {
           data: [
             {
                 "image": require("../../images/showpassword.png"),
-                "title": "Transfer"
+                "title": "Jadwal"
             },
             {
                 "image": require("../../images/showpassword.png"),
-                "title": "Bayar"
+                "title": "Kegiatan"
             },
             {
                 "image": require("../../images/showpassword.png"),
-                "title": "Beli"
+                "title": "Dakwah"
             },
         ]
     }
@@ -72,27 +72,40 @@ export default class HomeScreen extends React.Component {
             </Text>
         </View>
 
-        <View style={{marginTop: 20, justifyContent: "center", alignItems: "center"}}>
-            <FlatList
-                data={this.state.data}
-                scrollEnabled= {false}
-                showsVerticalScrollIndicator={false}
-                renderItem={({item}) =>
-                <View style={{width: 90, alignItems: 'center'}}>
-                  <View style= {styles.containerFiturCard}>
-                    <Image 
-                        style= {styles.imageFitur}  
-                        source={item.image}/>
-                  </View>
-                  <View style= {{ alignItems: 'center', width: 80, position: 'relative'}}>
-                    <Text style={styles.titleFitur}>
-                        {item.title}
-                    </Text>
-                  </View>
-                </View>
-                }
-                keyExtractor={item => item.image}
-              />
+        <View style={{justifyContent: "center"}}>
+            <View style={{flexDirection: "row"}}>
+            <View style={styles.cardLayanan}>
+                <Image
+                    style={{height: 60, width: "80%"}} 
+                    source={require('../../images/jadwal.png')}/>
+                <View style={{width: "100%", height: 0.5, backgroundColor: "#919191", justifyContent: "center", alignItems: "center", marginTop: 4}}/>
+                <Text style={{fontSize: 13, marginTop: 3, justifyContent: "center", alignItems: "center"}}>
+                    Jadwal
+                </Text>
+            </View>
+
+            <View style={styles.cardLayanan}>
+                <Image
+                    style={{height: 60, width: "80%"}} 
+                    source={require('../../images/dakwah.png')}/>
+                <View style={{width: "100%", height: 0.5, backgroundColor: "#919191", justifyContent: "center", alignItems: "center", marginTop: 4}}/>
+                <Text style={{fontSize: 13, marginTop: 3, justifyContent: "center", alignItems: "center"}}>
+                    Kegiatan
+                </Text>
+            </View>
+            </View>
+        </View>
+
+        <View style={{justifyContent: 'center', alignItems: 'center', margin: 23}}>
+        <View style={styles.cardDakwah}>
+            <Image
+                style={{height: 60, width: "40%"}} 
+                source={require('../../images/kegiatan.png')}/>
+            <View style={{width: "100%", height: 0.5, backgroundColor: "#919191", justifyContent: "center", alignItems: "center", marginTop: 4}}/>
+            <Text style={{fontSize: 13, marginTop: 3, justifyContent: "center", alignItems: "center"}}>
+                Dakwah
+            </Text>
+        </View>
         </View>
       </SafeAreaView>
     );
@@ -122,29 +135,24 @@ const styles = {
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
-  containerFiturCard: {
-    borderRadius: 4,
-    flexDirection: 'row',
-    position: 'relative',
-    elevation: 5,
-    shadowOpacity: 0.1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    width: 50,
-    height: 50,
+  cardLayanan: {
+      width: 170,
+      height: 100,
+      borderRadius: 8,
+      backgroundColor: "white",
+      elevation: 6,
+      marginTop: 20,
+      marginStart: 23,
+      justifyContent: "center",
+      alignItems: "center"
   },
-  imageFitur: {
-    borderRadius: 4,
-    width: 50,
-    height: 50,
-  },
-  titleFitur: {
-    flex: 1,
-    fontSize: 11,
-    textAlign: 'center',
-    color: '#000000',
-    marginTop: 6,
-    marginBottom: 10,
-  },
+  cardDakwah: {
+    width: "100%",
+    height: 100,
+    borderRadius: 8,
+      backgroundColor: "white",
+      elevation: 6,
+      justifyContent: "center",
+      alignItems: "center"
+}
 }
