@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, Text, Image } from 'react-native';
+import { SafeAreaView, View, Text, Image, FlatList } from 'react-native';
 import { SliderBox } from "react-native-image-slider-box"
 
 export default class HomeScreen extends React.Component {
@@ -11,7 +11,22 @@ export default class HomeScreen extends React.Component {
             "https://source.unsplash.com/1024x768/?girl",
             "https://source.unsplash.com/1024x768/?tree", // Network image
             // require('./assets/images/girl.jpg'),          // Local image
-          ]
+          ],
+
+          data: [
+            {
+                "image": require("../../images/showpassword.png"),
+                "title": "Transfer"
+            },
+            {
+                "image": require("../../images/showpassword.png"),
+                "title": "Bayar"
+            },
+            {
+                "image": require("../../images/showpassword.png"),
+                "title": "Beli"
+            },
+        ]
     }
 
   render() {
@@ -50,6 +65,35 @@ export default class HomeScreen extends React.Component {
             </View>
         </View>
         </View>
+
+        <View style={{marginStart: 15, marginTop: 20}}>
+            <Text style={{fontSize: 16, fontWeight: "bold"}}>
+                Layanan
+            </Text>
+        </View>
+
+        <View style={{marginTop: 20, justifyContent: "center", alignItems: "center"}}>
+            <FlatList
+                data={this.state.data}
+                scrollEnabled= {false}
+                showsVerticalScrollIndicator={false}
+                renderItem={({item}) =>
+                <View style={{width: 90, alignItems: 'center'}}>
+                  <View style= {styles.containerFiturCard}>
+                    <Image 
+                        style= {styles.imageFitur}  
+                        source={item.image}/>
+                  </View>
+                  <View style= {{ alignItems: 'center', width: 80, position: 'relative'}}>
+                    <Text style={styles.titleFitur}>
+                        {item.title}
+                    </Text>
+                  </View>
+                </View>
+                }
+                keyExtractor={item => item.image}
+              />
+        </View>
       </SafeAreaView>
     );
   }
@@ -77,5 +121,30 @@ const styles = {
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-  }
+  },
+  containerFiturCard: {
+    borderRadius: 4,
+    flexDirection: 'row',
+    position: 'relative',
+    elevation: 5,
+    shadowOpacity: 0.1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+    width: 50,
+    height: 50,
+  },
+  imageFitur: {
+    borderRadius: 4,
+    width: 50,
+    height: 50,
+  },
+  titleFitur: {
+    flex: 1,
+    fontSize: 11,
+    textAlign: 'center',
+    color: '#000000',
+    marginTop: 6,
+    marginBottom: 10,
+  },
 }

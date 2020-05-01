@@ -32,7 +32,7 @@ class HomeScreens extends React.Component {
     }
 }
 
-class RegisScreens extends React.Component {
+class SejarahScreen extends React.Component {
     render(){
         return(
             <View style={{flex: 1,
@@ -40,7 +40,57 @@ class RegisScreens extends React.Component {
                 alignItems: 'center',
                 justifyContent: 'center',
             }}>
-                <Regis/>
+                <Text>
+                    Sejarah Screen
+                </Text>
+            </View>
+        )
+    }
+}
+
+class DokumentasiScreen extends React.Component {
+    render(){
+        return(
+            <View style={{flex: 1,
+                backgroundColor: '#FFFFFF',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                <Text>
+                    Dokumentasi Screen
+                </Text>
+            </View>
+        )
+    }
+}
+
+class PengurusScreen extends React.Component {
+    render(){
+        return(
+            <View style={{flex: 1,
+                backgroundColor: '#FFFFFF',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                <Text>
+                    Pengurus Screen
+                </Text>
+            </View>
+        )
+    }
+}
+
+class ProfilScreen extends React.Component {
+    render(){
+        return(
+            <View style={{flex: 1,
+                backgroundColor: '#FFFFFF',
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}>
+                <Text>
+                    Profil Screen
+                </Text>
             </View>
         )
     }
@@ -56,13 +106,42 @@ const AppTabNavigator = createMaterialBottomTabNavigator({
                     source={require('../images/beranda.png')} />
              ),
            }},
-    Regis: {screen: RegisScreens, 
+    Sejarah: {screen: SejarahScreen, 
            navigationOptions: {
-           tabBarLabel: 'Daftar',
+           tabBarLabel: 'Sejarah',
            tabBarIcon:({tintColor}) => (
             <Image 
                 style={{ width: 24, height: 24, tintColor: tintColor }} 
-                source={require('../images/showpassword.png')} />
+                source={require('../images/sejarah.png')} />
+            ),
+        }},
+
+    Dokumentasi: {screen: DokumentasiScreen, 
+        navigationOptions: {
+        tabBarLabel: 'Dokumentasi',
+        tabBarIcon:({tintColor}) => (
+        <Image 
+            style={{ width: 24, height: 24, tintColor: tintColor }} 
+            source={require('../images/dokumentasi.png')} />
+         ),
+    }},
+
+    Pengurus: {screen: PengurusScreen, 
+        navigationOptions: {
+        tabBarLabel: 'Pengurus',
+        tabBarIcon:({tintColor}) => (
+            <Image 
+                style={{ width: 24, height: 24, tintColor: tintColor }} 
+                source={require('../images/pengurus.png')} />
+            ),
+        }},
+    Profil: {screen: ProfilScreen, 
+        navigationOptions: {
+        tabBarLabel: 'Profil',
+        tabBarIcon:({tintColor}) => (
+            <Image 
+                style={{ width: 24, height: 24, tintColor: tintColor }} 
+                source={require('../images/profil.png')} />
             ),
         }},
   }, {
