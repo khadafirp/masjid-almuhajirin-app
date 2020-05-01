@@ -1,16 +1,14 @@
 import React from 'react';
-import { SafeAreaView, View, Text } from 'react-native';
+import { SafeAreaView, View, Text, Image } from 'react-native';
 
 export default class SplashScreen extends React.Component {
 
   render() {
     return (
       <SafeAreaView style={styles.viewStyles}>
-      {/* <View style={styles.viewStyles}> */}
-        <Text style={styles.textStyles}>
-          Blitz Reading
-        </Text>
-      {/* </View> */}
+        <Image 
+          style={{width: 300, height: 300, marginBottom: 60}}
+          source={require("../images/masjidalmuhajirin.png")}/>
       </SafeAreaView>
     );
   }
@@ -21,7 +19,7 @@ const styles = {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'orange'
+    backgroundColor: 'white'
   },
   textStyles: {
     color: 'white',

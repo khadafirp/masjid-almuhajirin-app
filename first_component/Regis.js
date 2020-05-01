@@ -174,18 +174,31 @@ export default class FormSignUp extends Component {
               />
           </View>
 
+          <View style={{width: "100%", 
+                        borderRadius: 8, 
+                        height: 40, 
+                        backgroundColor: "#91bd0e", 
+                        alignItems: "center", 
+                        justifyContent: "center",
+                        marginTop: 25}}>
+            <TouchableOpacity onPress={() => this.validasiPassword(this.state.passwordText, this.state.validasiPasswordText)}>
+              <Text style={{color:"white"}}>
+                Daftar
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
+            <Text style={styles.instructions}>Sudah punya akun?</Text>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('login')}
+              >
+              <Text style={styles.instructionsRegister}>Masuk</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       </ScrollView>
-      {/* </View> */}
-
-      <View style={{width: "100%", height: 40, backgroundColor: "#337AFF", alignItems: "center", justifyContent: "center"}}>
-        <TouchableOpacity onPress={() => this.validasiPassword(this.state.passwordText, this.state.validasiPasswordText)}>
-          <Text style={{color:"white"}}>
-            Daftar
-          </Text>
-        </TouchableOpacity>
-      </View>
 
       </SafeAreaView>
     );
@@ -256,5 +269,20 @@ const styles = StyleSheet.create({
     color: '#000000',
     marginBottom: 5,
     marginTop:10
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#000000',
+    fontSize: 12,
+    marginBottom: 5,
+    marginTop:10
+  },
+  instructionsRegister: {
+    textAlign: 'center',
+    color: '#91bd0e',
+    fontSize: 12,
+    marginBottom: 5,
+    marginTop:10,
+    marginStart: 5
   },
 });
