@@ -12,4 +12,4 @@ import RouterHome from './halaman_utama/home_page/router_home'
 import LandingPage from './halaman_utama/LandingPage.js'
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => Registrasi);
+AppRegistry.registerComponent(appName, () => App);

@@ -5,6 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native'
 import Regis from './Regis'
 
+// var SharedPreferences = require('react-native-shared-preferences')
+
 const Stack = createStackNavigator();
 
 export default class Login extends Component {
@@ -29,7 +31,16 @@ export default class Login extends Component {
       if (this.state.textUsername === "" && this.state.textPassword === "") {
         return false
       }
+      return true
     }
+
+    // secPrefExample = () => {
+    //   SharedPreferences.setItem("key", this.state.textUsername);
+
+      // SharedPreferences.getItem("key", function(value) {
+      //   console.log(value)
+      // })
+    // }
 
   render() {
     let splash_screen = (
@@ -39,7 +50,6 @@ export default class Login extends Component {
       if(this.state.isVisible === true){
         return splash_screen    
       }else{
-
         return (
           <SafeAreaView style={styles.container}>
               <Image style={{width:300, height:300}} source={require('../images/masjidalmuhajirin.png')} />
@@ -59,11 +69,13 @@ export default class Login extends Component {
               />
 
               <TouchableOpacity 
-               style={(this.state.textUsername === "" && this.state.textPassword === "") ? styles.buttonDisable : styles.buttonStyle}
-               disabled={
-                 (this.state.textUsername === "" && this.state.textPassword === "") ? false : true
-               }
-               onPress={this.btnDisable}
+               style={ styles.buttonStyle}
+              //  disabled={
+              //    (this.state.textUsername === "" && this.state.textPassword === "") ? false : true
+              //  }
+              //  onPress={
+              //    this.secPrefExample()
+              //  }
               >
               <Text style={styles.textSignup}>
                 Masuk

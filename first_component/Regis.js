@@ -1,17 +1,26 @@
 import React, {Component} from 'react';
-import {StyleSheet, Alert, SafeAreaView, Text, View, TouchableOpacity, ScrollView, TextInput, Image, ActivityIndicator, ToastAndroid} from 'react-native';
+import {StyleSheet, FlatList, Alert, SafeAreaView, Text, View, TouchableOpacity, ScrollView, TextInput, Image, ActivityIndicator, ToastAndroid} from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import moment from "moment";
 
-export default class FormSignUp extends Component {
+var SharedPreferences = require('react-native-shared-preferences')
+
+export default class Regis extends Component {
   
   state = {
     isFocused: false,
-    isLoading: false,
+    isLoading: true,
+    dataUser: "",
+    namaDepan: "",
+    namaBelakang: "",
+    txtUsername: "",
     date: "",
     showPassword: false,
     passwordText: "",
-    validasiPasswordText: ""
+    validasiPasswordText: "",
+    tglLahir: "",
+    noHp: "",
+    alamat: ""
   }
 
   handleFocus = event => {
@@ -30,38 +39,49 @@ export default class FormSignUp extends Component {
     }
   }
 
+  fetchRegis = () => {
+    // let formData = new FormData()
+    // formData.append("username", "khadafi")
+
+    fetch('http://localhost:3306/api/regis', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: this.state.txtUsername,
+        password: this.state.passwordText,
+        posisi: "user",
+        nama_lengkap: this.state.namaDepan + " " + this.state.namaBelakang,
+        tanggal_lahir: this.state.tglLahir,
+        alamat: this.state.alamat,
+        no_hp: this.state.noHp,
+        status_aktif: 0
+      }, console.log(this.state.body))
+    })
+      .then((response) => response.json())
+      .then((responseJson) => 
+        console.log(responseJson)
+      )
+      .catch((error) => 
+        console.error(error)
+      )
+      .finally(() => this.setState({isLoading: false}));
+
+      console.log("Registrasi berhasil")
+  }
+
   validasiPassword = (passwordSatu, passwordDua) => {
     if(passwordSatu !== passwordDua){
       Alert.alert("Password tidak sama")
     }
   }
 
-  fetchRegis = () => {
-    let formData = new FormData()
-    formData.append("username", "khadafi")
-
-    fetch('http://localhost:1000/api/regis', {
-      method: "POST",
-      body: formData
-    })
-
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.setState(
-        {
-          isLoading: false,
-          dataSource: responseJson
-        }, function (){
-          
-        }
-      )
-    })
-    .catch((error) => {
-      console.error(error)
-    })
-
-    Alert.alert(this.state.dataSource)
-  }
+  // secPrefTest = () => {
+  //   SharedPreferences.getItem("key", function(value) {
+  //     console.log(value)
+  //   })
+  // }
 
   render() {
     return (
@@ -79,6 +99,7 @@ export default class FormSignUp extends Component {
               </Text>
               <TextInput
                 style={styles.textInputNamaDepan}
+                onChangeText={(text) => this.setState({namaDepan: text})}
               />
             </View>
 
@@ -88,6 +109,7 @@ export default class FormSignUp extends Component {
               </Text>
               <TextInput
                 style={styles.textInputNamaDepan}
+                onChangeText={(text) => this.setState({namaBelakang: text})}
               />
             </View>
           </View>
@@ -98,6 +120,8 @@ export default class FormSignUp extends Component {
             </Text>
             <TextInput
                 style={styles.textInput}
+                onChangeText={(text) => this.setState({txtUsername: text})
+                }
               />
           </View>
 
@@ -110,8 +134,7 @@ export default class FormSignUp extends Component {
               <TextInput
                 style={{height: 40, width: "88%", paddingLeft: 10}}
                 secureTextEntry={(this.state.showPassword === false) ? true : false}
-                onChangeText={(text) => this.setState({passwordText: text}), 
-                  console.log(this.state.passwordText)
+                onChangeText={(text) => this.setState({passwordText: text})
                 }
               />
 
@@ -128,9 +151,23 @@ export default class FormSignUp extends Component {
           </View>
 
           <View style={{marginTop: 16}}>
-            <Text style={{fontSize: 9}}>
-               Validasi Password
+          <Text style={{fontSize: 9}}>
+              Validasi Password
             </Text>
+            {/* <Text>
+              {
+                this.state.dataUser
+              }
+            </Text> */}
+              {/* {this.state.isLoading ? <ActivityIndicator/> : (
+                <FlatList
+                  data={this.state.dataUser}
+                  keyExtractor={({ id }, index) => id}
+                  renderItem={({ item }) => (
+                    <Text>{item.nama_lengkap}, {item.tanggal_lahir}</Text>
+                  )}
+                />
+              )} */}
             <View 
             style={styles.textInput}>
               <TextInput
@@ -159,7 +196,7 @@ export default class FormSignUp extends Component {
             </Text>
               <DatePicker
                 style={{width: 200, marginTop: 15}}
-                date={this.state.date}
+                date={this.state.tglLahir}
                 mode="date"
                 placeholder="select date"
                 format="YYYY-MM-DD"
@@ -178,7 +215,7 @@ export default class FormSignUp extends Component {
                   }
                   // ... You can check the source to find the other keys.
                 }}
-                onDateChange={(date) => {this.setState({date: date})}}
+                onDateChange={(date) => {this.setState({tglLahir: date})}}
             />
           </View>
 
@@ -189,6 +226,7 @@ export default class FormSignUp extends Component {
               <TextInput
                  style={styles.textInputNoHp}
                  placeholder={"08XXXXXXXXXX"}
+                 onChangeText={(text) => this.setState({noHp: text})}
               />
           </View>
 
@@ -199,6 +237,7 @@ export default class FormSignUp extends Component {
               <TextInput
                  style={styles.textInputNoHp}
                  placeholder={"Blok A-Z/nomor"}
+                 onChangeText={(text) => this.setState({alamat: text})}
               />
           </View>
 
@@ -209,7 +248,9 @@ export default class FormSignUp extends Component {
                         alignItems: "center", 
                         justifyContent: "center",
                         marginTop: 25}}>
-            <TouchableOpacity onPress={() => this.validasiPassword(this.state.passwordText, this.state.validasiPasswordText)}>
+            <TouchableOpacity 
+              onPress={() => this.fetchRegis()}
+            >
               <Text style={{color:"white"}}>
                 Daftar
               </Text>
