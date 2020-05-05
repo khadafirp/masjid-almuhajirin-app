@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native'
 import Regis from './Regis'
 
-// var SharedPreferences = require('react-native-shared-preferences')
+var SharedPreferences = require('react-native-shared-preferences')
 
 const Stack = createStackNavigator();
 
@@ -15,7 +15,8 @@ export default class Login extends Component {
         isVisible: true,
         isEnable: false,
         textUsername: "",
-        textPassword: ""
+        textPassword: "",
+        resStatusCode: ""
     }
     
     componentDidMount (){
@@ -34,13 +35,58 @@ export default class Login extends Component {
       return true
     }
 
-    // secPrefExample = () => {
-    //   SharedPreferences.setItem("key", this.state.textUsername);
+    // secPrefExampleOne = () => {
+    //   SharedPreferences.setItem("username", "this.state.textUsername");
 
-      // SharedPreferences.getItem("key", function(value) {
+      // SharedPreferences.getItem("username", function(value) {
       //   console.log(value)
       // })
     // }
+
+    // secPrefExampleTwo = () => {
+    //   SharedPreferences.setItem("password", this.state.textPassword);
+    //   SharedPreferences.getItem("password", function(value) {
+    //     console.log(value)
+    //   })
+    // }
+
+    fetchLogin = (username, password) => {
+      fetch('http://localhost:3306/api/user', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }, 
+        console.log(this.state.body))
+    })
+      .then((response) => response.json())
+      .then((responseJson) => 
+        // console.log(responseJson.statusCode)
+        this.setState(
+          {
+            resStatusCode: responseJson.statusCode
+          }
+        )
+      )
+      .catch((error) => 
+        console.error(error)
+      )
+      .finally(() => this.setState({isLoading: false}));
+
+      // console.log(this.state.resStatusCode)
+
+      if (this.state.resStatusCode != 200) {
+        Alert.alert('Maaf, user tidak ada\nsilahkan daftar terlebih dahulu')
+
+        // this.secPrefExampleOne()
+        // this.secPrefExampleTwo()
+      }else{
+        this.props.navigation.replace('home')
+      }
+  }
 
   render() {
     let splash_screen = (
@@ -73,9 +119,9 @@ export default class Login extends Component {
               //  disabled={
               //    (this.state.textUsername === "" && this.state.textPassword === "") ? false : true
               //  }
-              //  onPress={
-              //    this.secPrefExample()
-              //  }
+              onPress={() =>
+                this.fetchLogin(this.state.textUsername, this.state.textPassword)
+              }
               >
               <Text style={styles.textSignup}>
                 Masuk

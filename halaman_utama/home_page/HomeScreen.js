@@ -1,6 +1,8 @@
 import React from 'react';
-import { SafeAreaView, View, Text, Image, FlatList, ScrollView} from 'react-native';
+import { SafeAreaView, View, Text, Image, FlatList, ScrollView, TouchableOpacity, Share} from 'react-native';
 import { SliderBox } from "react-native-image-slider-box"
+
+var SharedPreferences = require('react-native-shared-preferences')
 
 export default class HomeScreen extends React.Component {
 
@@ -26,10 +28,50 @@ export default class HomeScreen extends React.Component {
                 "image": require("../../images/showpassword.png"),
                 "title": "Dakwah"
             },
-        ]
+        ],
+        username: "khadafi",
+        password: "123",
+        namaUser: "",
+        noHpUser: ""
     }
 
+    fetchDataProfil = (username, password) => {
+        fetch('http://localhost:3306/api/user', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }, 
+          console.log(this.state.body))
+      })
+        .then((response) => response.json())
+        .then((responseJson) => 
+        //   console.log(responseJson.body.nama_lengkap)
+          this.setState(
+            {
+              namaUser: responseJson.body.nama_lengkap,
+              noHpUser: responseJson.body.no_hp
+            }
+          )
+        )
+        .catch((error) => 
+          console.error(error)
+        )
+        .finally(() => this.setState({isLoading: false}));
+    }
+
+    componentDidMount(){
+        this.fetchDataProfil(
+            this.state.username, this.state.password
+        )
+    }
+    
+
   render() {
+    
     return (
       <SafeAreaView style={styles.viewStyles}>
           <View style={{height: 300}}>
@@ -53,14 +95,27 @@ export default class HomeScreen extends React.Component {
                     <Text
                         style={{color: "white", fontSize: 12}}
                     >
-                        Khadafi Rohman Prihanda
+                        {
+                            this.state.namaUser
+                        }
                     </Text>
 
                     <Text
                         style={{color: "white", fontSize: 13, marginTop: 8}}
                     >
-                        081281555816
+                        {
+                            this.state.noHpUser
+                        }
                     </Text>
+                </View>
+
+                <View style={{width: 160, alignItems: 'flex-end', justifyContent: 'center'}}>
+                    <Image
+                        style={{height: 30, width: 30, tintColor: 'white'}}
+                        source={
+                            require('../../images/menu_dot.png')
+                        }
+                    />
                 </View>
             </View>
         </View>
@@ -74,15 +129,19 @@ export default class HomeScreen extends React.Component {
 
         <View style={{justifyContent: "center"}}>
             <View style={{flexDirection: "row"}}>
-            <View style={styles.cardLayanan}>
-                <Image
-                    style={{height: 60, width: "80%"}} 
-                    source={require('../../images/jadwal.png')}/>
-                <View style={{width: "100%", height: 0.5, backgroundColor: "#919191", justifyContent: "center", alignItems: "center", marginTop: 4}}/>
-                <Text style={{fontSize: 13, marginTop: 3, justifyContent: "center", alignItems: "center"}}>
-                    Jadwal
-                </Text>
-            </View>
+                <TouchableOpacity
+                    // onPress={() => this.fetchDataProfil(this.state.username, this.state.password)}
+                >
+                    <View style={styles.cardLayanan}>
+                        <Image
+                            style={{height: 60, width: "80%"}} 
+                            source={require('../../images/jadwal.png')}/>
+                        <View style={{width: "100%", height: 0.5, backgroundColor: "#919191", justifyContent: "center", alignItems: "center", marginTop: 4}}/>
+                        <Text style={{fontSize: 13, marginTop: 3, justifyContent: "center", alignItems: "center"}}>
+                            Jadwal
+                        </Text>
+                    </View>
+                </TouchableOpacity>
 
             <View style={styles.cardLayanan}>
                 <Image
@@ -115,7 +174,7 @@ export default class HomeScreen extends React.Component {
 const styles = {
   viewStyles: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#f8f8f8',
   },
   textStyles: {
     color: 'white',
