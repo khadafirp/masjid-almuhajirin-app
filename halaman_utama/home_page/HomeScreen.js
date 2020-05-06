@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, Text, Image, FlatList, ScrollView, TouchableOpacity, Share} from 'react-native';
+import { SafeAreaView, View, AsyncStorage, Text, Image, FlatList, ScrollView, TouchableOpacity, Share} from 'react-native';
 import { SliderBox } from "react-native-image-slider-box"
 
 var SharedPreferences = require('react-native-shared-preferences')
@@ -29,47 +29,92 @@ export default class HomeScreen extends React.Component {
                 "title": "Dakwah"
             },
         ],
-        username: "khadafi",
-        password: "123",
+        username: "",
+        password: "",
         namaUser: "",
         noHpUser: ""
     }
 
-    fetchDataProfil = (username, password) => {
-        fetch('http://localhost:3306/api/user', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }, 
-          console.log(this.state.body))
-      })
-        .then((response) => response.json())
-        .then((responseJson) => 
-        //   console.log(responseJson.body.nama_lengkap)
-          this.setState(
-            {
-              namaUser: responseJson.body.nama_lengkap,
-              noHpUser: responseJson.body.no_hp
-            }
-          )
-        )
-        .catch((error) => 
-          console.error(error)
-        )
-        .finally(() => this.setState({isLoading: false}));
-    }
+    _retrieveData = async () => {
+          const value = await AsyncStorage.getItem('username');
+          console.log(value);
+          this.setState({username: value})
+          console.log(this.state.username)
+
+          const values = await AsyncStorage.getItem('password');
+          console.log(values);
+          this.setState({password: values})
+          console.log(this.state.password)
+
+            fetch('http://localhost:3306/api/user', {
+            method: "POST",
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+            username: this.state.username,
+            password: this.state.password,
+            }, 
+            console.log(this.state.body))
+            })
+            .then((response) => response.json())
+            .then((responseJson) => 
+            //   console.log(responseJson.body.nama_lengkap)
+            this.setState(
+                {
+                namaUser: responseJson.body.nama_lengkap,
+                noHpUser: responseJson.body.no_hp
+                }
+            )
+            )
+            .catch((error) => 
+            console.error(error)
+            )
+            .finally(() => this.setState({isLoading: false}));
+      };
+
+    //   _retrieveDataa = async () => {
+    //       const values = await AsyncStorage.getItem('password');
+    //       console.log(values);
+    //       this.setState({password: values})
+    //       console.log(this.state.password)
+    //   };
+
+    // fetchDataProfil = (username, password) => {
+    //     fetch('http://localhost:3306/api/user', {
+    //     method: "POST",
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //       username: username,
+    //       password: password,
+    //     }, 
+    //       console.log(this.state.body))
+    //   })
+    //     .then((response) => response.json())
+    //     .then((responseJson) => 
+    //     //   console.log(responseJson.body.nama_lengkap)
+    //       this.setState(
+    //         {
+    //           namaUser: responseJson.body.nama_lengkap,
+    //           noHpUser: responseJson.body.no_hp
+    //         }
+    //       )
+    //     )
+    //     .catch((error) => 
+    //       console.error(error)
+    //     )
+    //     .finally(() => this.setState({isLoading: false}));
+    // }
 
     componentDidMount(){
-        this.fetchDataProfil(
-            this.state.username, this.state.password
-        )
+        setTimeout(() => {
+            this._retrieveData()
+        }, 1000
+      )
     }
     
-
   render() {
     
     return (
@@ -93,7 +138,7 @@ export default class HomeScreen extends React.Component {
 
                 <View style={{justifyContent: "center", marginStart: 15}}>
                     <Text
-                        style={{color: "white", fontSize: 12}}
+                        style={{color: "white", fontSize: 12, width: 200}}
                     >
                         {
                             this.state.namaUser
@@ -109,7 +154,7 @@ export default class HomeScreen extends React.Component {
                     </Text>
                 </View>
 
-                <View style={{width: 160, alignItems: 'flex-end', justifyContent: 'center'}}>
+                <View style={{width: 100, alignItems: 'flex-end', justifyContent: 'center'}}>
                     <Image
                         style={{height: 30, width: 30, tintColor: 'white'}}
                         source={
@@ -130,6 +175,7 @@ export default class HomeScreen extends React.Component {
         <View style={{justifyContent: "center"}}>
             <View style={{flexDirection: "row"}}>
                 <TouchableOpacity
+                    // onPress={() => this._retrieveData() && this._retrieveDataa()}
                     // onPress={() => this.fetchDataProfil(this.state.username, this.state.password)}
                 >
                     <View style={styles.cardLayanan}>

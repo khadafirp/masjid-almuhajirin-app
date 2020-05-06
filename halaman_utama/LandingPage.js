@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, CheckBox, Image, SafeAreaView, FlatList, ScrollView, Button} from 'react-native';
+import { StyleSheet, AsyncStorage, Text, View, TextInput, CheckBox, Image, SafeAreaView, FlatList, ScrollView, Button} from 'react-native';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs'
 import {createAppContainer} from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -83,6 +83,7 @@ class PengurusScreen extends React.Component {
 }
 
 class ProfilScreen extends React.Component {
+      
     render(){
         return(
             <ProfilPages/>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import SplashScreen from './SplashScreen'
-import {StyleSheet, Alert, SafeAreaView, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
+import {StyleSheet, Alert, SafeAreaView, AsyncStorage, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native'
 import Regis from './Regis'
@@ -50,6 +50,15 @@ export default class Login extends Component {
     //   })
     // }
 
+    _storeData = async () => {
+      try {
+        await AsyncStorage.setItem('username', this.state.textUsername);
+        await AsyncStorage.setItem('password', this.state.textPassword);
+      } catch (error) {
+        console.log(error)
+      }
+    };
+
     fetchLogin = (username, password) => {
       fetch('http://localhost:3306/api/user', {
       method: "POST",
@@ -84,7 +93,8 @@ export default class Login extends Component {
         // this.secPrefExampleOne()
         // this.secPrefExampleTwo()
       }else{
-        this.props.navigation.replace('home')
+        this.props.navigation.replace('home') && 
+        this._storeData()
       }
   }
 

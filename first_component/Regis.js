@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, FlatList, Alert, SafeAreaView, Text, View, TouchableOpacity, ScrollView, TextInput, Image, ActivityIndicator, ToastAndroid} from 'react-native';
+import {StyleSheet, AsyncStorage, FlatList, Alert, SafeAreaView, Text, View, TouchableOpacity, ScrollView, TextInput, Image, ActivityIndicator, ToastAndroid} from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import moment from "moment";
 
@@ -68,6 +68,7 @@ export default class Regis extends Component {
       )
       .finally(() => this.setState({isLoading: false}));
 
+      this.props.navigation.navigate('login')
       console.log("Registrasi berhasil")
   }
 
@@ -82,6 +83,22 @@ export default class Regis extends Component {
   //     console.log(value)
   //   })
   // }
+
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('username');
+      const values = await AsyncStorage.getItem('password');
+      if (value !== null && value !== null) {
+        // We have data!!
+        console.log(value);
+        console.log(values);
+      }
+      console.log("null")
+    } catch (error) {
+      console.log(error)
+      // Error retrieving data
+    }
+  };
 
   render() {
     return (
@@ -260,7 +277,7 @@ export default class Regis extends Component {
           <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
             <Text style={styles.instructions}>Sudah punya akun?</Text>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('login')}
+                onPress={() => this.props.navigation.navigate('login') }
               >
               <Text style={styles.instructionsRegister}>Masuk</Text>
             </TouchableOpacity>

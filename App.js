@@ -38,20 +38,6 @@ const AppSwitchNavigator = createStackNavigator({
       headerShown: false
     }
   },
-  profil: 
-  {
-    screen: Profil,
-    navigationOptions: {
-      headerShown: false
-    }
-  },
-  EditProfil: 
-  {
-    screen: EditProfil,
-    navigationOptions: {
-      headerShown: false
-    }
-  },
 })
 
 const AppContainer = createAppContainer(AppSwitchNavigator)

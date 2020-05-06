@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, FlatList, Alert, Platform, SafeAreaView, Text, View, TouchableOpacity, ScrollView, TextInput, Image, ActivityIndicator, ToastAndroid} from 'react-native';
+import {StyleSheet, FlatList, Alert, AsyncStorage, Platform, SafeAreaView, Text, View, TouchableOpacity, ScrollView, TextInput, Image, ActivityIndicator, ToastAndroid} from 'react-native';
 import ActionSheet from 'react-native-action-sheet';
 
 var BUTTONSiOS = [
@@ -18,46 +18,57 @@ var BUTTONSiOS = [
 export default class ProfileScreen extends React.Component {
 
     state = {
-        username: "khadafi",
-        password: "123",
+        username: "",
+        password: "",
         namaUser: "",
         noHpUser: "",
         alamatUser: "",
     }
 
-    fetchDataProfil = (username, password) => {
-        fetch('http://localhost:3306/api/user', {
-        method: "POST",
-        headers: {
+    _retrieveData = async () => {
+        const value = await AsyncStorage.getItem('username');
+        console.log(value);
+        this.setState({username: value})
+        console.log(this.state.username)
+
+        const values = await AsyncStorage.getItem('password');
+        console.log(values);
+        this.setState({password: values})
+        console.log(this.state.password)
+
+          fetch('http://localhost:3306/api/user', {
+          method: "POST",
+          headers: {
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }, 
+          },
+          body: JSON.stringify({
+          username: this.state.username,
+          password: this.state.password,
+          }, 
           console.log(this.state.body))
-      })
-        .then((response) => response.json())
-        .then((responseJson) => 
-        //   console.log(responseJson.body.nama_lengkap)
+          })
+          .then((response) => response.json())
+          .then((responseJson) => 
+          //   console.log(responseJson.body.nama_lengkap)
           this.setState(
-            {
+              {
               namaUser: responseJson.body.nama_lengkap,
               noHpUser: responseJson.body.no_hp,
               alamatUser: responseJson.body.alamat
-            }
+              }
           )
-        )
-        .catch((error) => 
+          )
+          .catch((error) => 
           console.error(error)
-        )
-        .finally(() => this.setState({isLoading: false}));
-    }
+          )
+          .finally(() => this.setState({isLoading: false}));
+    };
 
     componentDidMount(){
-        this.fetchDataProfil(
-            this.state.username, this.state.password
-        )
+        setTimeout(() => {
+            this._retrieveData()
+        }, 1000
+      )
     }
 
     showActionSheet = () => {
