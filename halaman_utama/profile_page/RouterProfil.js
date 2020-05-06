@@ -7,13 +7,13 @@ import Regis from '../../first_component/Regis'
 import Profil from "../profile_page/ProfileScreen"
 import EditProfil from "../profile_page/EditProfil"
 
-class router_home extends React.Component {
+class RouterProfil extends React.Component {
   render() {
     return <AppContainer/>
   }
 }
 
-export default router_home;
+export default RouterProfil;
 
 const AppSwitchNavigator = createStackNavigator({
   profil: 

@@ -4,7 +4,9 @@ import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom
 import {createAppContainer} from 'react-navigation'
 import Icon from 'react-native-vector-icons/Ionicons';
 import HomePage from "../halaman_utama/home_page/HomeScreen"
+import ProfilPages from "../halaman_utama/profile_page/RouterProfil"
 import Regis from "../first_component/Regis.js"
+import Profil from "../halaman_utama/profile_page/ProfileScreen"
 
 // export default class LandingPage extends React.Component {
 
@@ -83,15 +85,7 @@ class PengurusScreen extends React.Component {
 class ProfilScreen extends React.Component {
     render(){
         return(
-            <View style={{flex: 1,
-                backgroundColor: '#FFFFFF',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}>
-                <Text>
-                    Profil Screen
-                </Text>
-            </View>
+            <ProfilPages/>
         )
     }
 }

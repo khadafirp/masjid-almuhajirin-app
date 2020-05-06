@@ -1,21 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, FlatList, Alert, Platform, SafeAreaView, Text, View, TouchableOpacity, ScrollView, TextInput, Image, ActivityIndicator, ToastAndroid} from 'react-native';
-import ActionSheet from 'react-native-action-sheet';
 
-var BUTTONSiOS = [
-    'Edit Profil',
-    'Cancel'
-  ];
-   
-  var BUTTONSandroid = [
-    'Edit Profil',
-    'Cancel'
-  ];
-   
-  var DESTRUCTIVE_INDEX = 1;
-  var CANCEL_INDEX = 1;
-
-export default class ProfileScreen extends React.Component {
+export default class EditProfil extends React.Component {
 
     state = {
         username: "khadafi",
@@ -60,37 +46,18 @@ export default class ProfileScreen extends React.Component {
         )
     }
 
-    showActionSheet = () => {
-        ActionSheet.showActionSheetWithOptions({
-            options: (Platform.OS == 'ios') ? BUTTONSiOS : BUTTONSandroid,
-            cancelButtonIndex: CANCEL_INDEX,
-            destructiveButtonIndex: DESTRUCTIVE_INDEX,
-            tintColor: 'black'
-          },
-          (buttonIndex) => {
-            // console.log('button clicked :', buttonIndex);
-            if (buttonIndex === 0) {
-                this.props.navigation.navigate('editProfil')   
-            }
-
-        })
-    }
-
     render(){
         return(
             <SafeAreaView style={styles.container}>
 
                 <View>
                     <TouchableOpacity
-                        onPress={() => 
-                            this.showActionSheet()
-                        }
+                        onPress={() => this.props.navigation.navigate("profil")}
                     >
-                        <View style={{width: "100%", position: 'absolute', marginStart: "90%", marginTop: 20}}>
-                            <Image
-                                style={{height: 20, width: 20}}
-                                source={require('../../images/menu_dot.png')}
-                            />
+                        <View style={{width: "100%", position: 'absolute', marginStart: "85%", marginTop: 20}}>
+                            <Text>
+                                Selesai
+                            </Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -112,11 +79,11 @@ export default class ProfileScreen extends React.Component {
                         </Text>
 
                         <View style={{backgroundColor: 'white', height: 35, justifyContent: 'center', marginTop: 8, borderRadius: 8}}>
-                            <Text style={{marginStart: 10}}>
+                            <TextInput style={{marginStart: 10}}>
                                 {
                                     this.state.namaUser
                                 }
-                            </Text>
+                            </TextInput>
                         </View>
                     </View>
 
@@ -126,11 +93,11 @@ export default class ProfileScreen extends React.Component {
                         </Text>
 
                         <View style={{backgroundColor: 'white', height: 35, justifyContent: 'center', marginTop: 8, borderRadius: 8}}>
-                            <Text style={{marginStart: 10}}>
+                            <TextInput style={{marginStart: 10}}>
                                 {
                                     this.state.noHpUser
                                 }
-                            </Text>
+                            </TextInput>
                         </View>
                     </View>
 
@@ -140,11 +107,11 @@ export default class ProfileScreen extends React.Component {
                         </Text>
 
                         <View style={{backgroundColor: 'white', height: 35, justifyContent: 'center', marginTop: 8, borderRadius: 8}}>
-                            <Text style={{marginStart: 10}}>
+                            <TextInput style={{marginStart: 10}}>
                                 {
                                     this.state.alamatUser
                                 }
-                            </Text>
+                            </TextInput>
                         </View>
                     </View>
                 </View>

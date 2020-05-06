@@ -5,6 +5,8 @@ import {createAppContainer} from 'react-navigation'
 import Login from './first_component/Login'
 import Regis from './first_component/Regis'
 import Home from "./halaman_utama/LandingPage"
+import Profil from "./halaman_utama/profile_page/ProfileScreen"
+import EditProfil from "./halaman_utama/profile_page/EditProfil"
 
 class App extends React.Component {
   render() {
@@ -32,6 +34,20 @@ const AppSwitchNavigator = createStackNavigator({
   home: 
   {
     screen: Home,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
+  profil: 
+  {
+    screen: Profil,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
+  EditProfil: 
+  {
+    screen: EditProfil,
     navigationOptions: {
       headerShown: false
     }

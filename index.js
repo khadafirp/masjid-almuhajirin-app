@@ -11,6 +11,7 @@ import Registrasi from './first_component/Regis.js'
 import RouterHome from './halaman_utama/home_page/router_home'
 import LandingPage from './halaman_utama/LandingPage.js'
 import Profil from "./halaman_utama/profile_page/ProfileScreen"
+import EditProfil from "./halaman_utama/profile_page/EditProfil"
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => Profil);
+AppRegistry.registerComponent(appName, () => App);
