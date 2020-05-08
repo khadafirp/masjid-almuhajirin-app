@@ -4,6 +4,7 @@ import {StyleSheet, Alert, SafeAreaView, AsyncStorage, Text, View, TouchableOpac
 import { createStackNavigator } from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native'
 import Regis from './Regis'
+import LandingPage from '../halaman_utama/LandingPage'
 
 var SharedPreferences = require('react-native-shared-preferences')
 
@@ -108,55 +109,49 @@ export default class Login extends Component {
       }else{
         return (
           <SafeAreaView style={styles.container}>
-              <Image style={{width:300, height:300}} source={require('../images/masjidalmuhajirin.png')} />
+          <Image style={{width:300, height:300}} source={require('../images/masjidalmuhajirin.png')} />
 
-              <View style={{marginTop: 70}}>
-              <TextInput 
-                  style={styles.textInput}
-                  placeholder='Username'
-                  utoCapitalize="none"
-                  onChangeText={(text) => this.setState({textUsername: text})}
-              />
-              <TextInput 
-                  secureTextEntry={true}
-                  style={[styles.textInput]}
-                  placeholder='Password'
-                  onChangeText={(text) => this.setState({textPassword: text})}
-              />
+          <View style={{marginTop: 70}}>
+          <TextInput 
+              style={styles.textInput}
+              placeholder='Username'
+              utoCapitalize="none"
+              onChangeText={(text) => this.setState({textUsername: text})}
+          />
+          <TextInput 
+              secureTextEntry={true}
+              style={[styles.textInput]}
+              placeholder='Password'
+              onChangeText={(text) => this.setState({textPassword: text})}
+          />
 
-              <TouchableOpacity 
-               style={ styles.buttonStyle}
-              //  disabled={
-              //    (this.state.textUsername === "" && this.state.textPassword === "") ? false : true
-              //  }
-              onPress={() =>
-                this.fetchLogin(this.state.textUsername, this.state.textPassword)
-              }
+          <TouchableOpacity 
+           style={ styles.buttonStyle}
+          //  disabled={
+          //    (this.state.textUsername === "" && this.state.textPassword === "") ? false : true
+          //  }
+          onPress={() =>
+            this.fetchLogin(this.state.textUsername, this.state.textPassword)
+          }
+          >
+          <Text style={styles.textSignup}>
+            Masuk
+          </Text>
+          </TouchableOpacity>
+
+            <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
+              <Text style={styles.instructions}>Belum punya akun?</Text>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('regis')}
               >
-              <Text style={styles.textSignup}>
-                Masuk
-              </Text>
+              <Text style={styles.instructionsRegister}>Daftar</Text>
               </TouchableOpacity>
-
-                <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
-                  <Text style={styles.instructions}>Belum punya akun?</Text>
-                  <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('regis')}
-                  >
-                  <Text style={styles.instructionsRegister}>Daftar</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>    
-          {/* </View> */}
-          </SafeAreaView>
+            </View>
+          </View>    
+      {/* </View> */}
+      </SafeAreaView>
       );
       }
-    }
-
-    regisPage = ({navigation}) => {
-        return(
-            <Regis/>
-        );
     }
 }
 
