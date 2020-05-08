@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableWithoutFeedback, ActivityIndicator, AsyncStorage, Text, View, TextInput, CheckBox, Image, SafeAreaView, FlatList, ScrollView, Button, Alert} from 'react-native';
+import { StyleSheet, Platform, ActivityIndicator, AsyncStorage, Text, View, TextInput, CheckBox, Image, SafeAreaView, FlatList, ScrollView, Button, Alert} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class ListPengurus extends React.Component {
@@ -31,7 +31,51 @@ export default class ListPengurus extends React.Component {
                 "jabatan": "Bendahara"
             },
         ],
+        dataListPengurus: "",
         isLoading: false
+    }
+
+    fetchDataPengurus = () => {
+        fetch('http://localhost:3306/api/dataPengurus', {
+            method: "GET",
+            headers: {
+            'Content-Type': 'application/json'
+            }
+            })
+            .then((response) => response.json())
+            .then((responseJson) => 
+            //   console.log(responseJson)
+            this.setState(
+                {
+                    dataListPengurus: responseJson
+                }
+            )
+            )
+            .catch((error) => 
+            console.error(error)
+            )
+            .finally(() => this.setState({isLoading: false}));
+
+            console.log(this.state.dataListPengurus)
+    }
+
+    _storeData = async (value) => {
+        try {
+          await AsyncStorage.setItem('namaPengurus', value);
+        } catch (error) {
+          console.log(error)
+        }
+      };
+
+    componentDidMount(){
+        setTimeout(() => {
+            if (Platform.OS === 'ios') {
+                this.fetchDataPengurus()                
+            }else{
+                this.fetchDataPengurus()
+            }
+
+        }, 1000)
     }
 
     render(){
@@ -42,7 +86,7 @@ export default class ListPengurus extends React.Component {
                 width: "100%"
             }}>
                 <View>
-                    <View style={{width: "100%", height: 50, backgroundColor: "white", shadowOffset:{width: 2,  height: 2}, shadowOpacity: 0.1, flexDirection: 'row'}}>
+                    {/* <View style={{width: "100%", height: 50, backgroundColor: "white", shadowOffset:{width: 2,  height: 2}, shadowOpacity: 0.1, flexDirection: 'row'}}>
                         <Image style={{width: 50, height: 50}} source={require("../images/masjidalmuhajirin.png")}/>
 
                         <View style={{position: 'absolute', height: 50, width: "100%", alignItems: 'center', justifyContent: 'center'}}>
@@ -50,18 +94,19 @@ export default class ListPengurus extends React.Component {
                                 Pengurus
                             </Text>
                         </View>
-                    </View>
+                    </View> */}
 
                     <View style={{marginTop: 20}}>
                     {this.state.isLoading ? <ActivityIndicator/> : (
                         <FlatList
                         // numColumns= {2}
-                        data={this.state.data}
+                        data={this.state.dataListPengurus}
                         scrollEnabled= {false}
                         showsVerticalScrollIndicator={false}
                         renderItem={({item}) =>
                         <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate("DetailPengurus")}
+                            onPress={() => this.props.navigation.navigate("DetailPengurus") && this._storeData(item.nama_pengurus)}
+                            // onPress={() => this.fetchDataPengurus()}
                         >
                         <View style={{marginStart: 20, marginTop: 10, marginEnd: 20}}>
                             <View style={{width: "100%", height: 50, borderRadius: 8, backgroundColor: "#FFF", shadowOpacity: 0.1, flexDirection: 'row'}}>
@@ -72,7 +117,7 @@ export default class ListPengurus extends React.Component {
                                 <View style={{height: 50, width: 180, marginStart: 10, justifyContent: 'center'}}>
                                     <Text style={{fontSize: 11}}>
                                         {
-                                            item.nama
+                                            item.nama_pengurus
                                         }
                                     </Text>
                                 </View>

@@ -15,6 +15,7 @@ export default class Login extends Component {
     state = {
         isVisible: true,
         isEnable: false,
+        isLoading: false,
         textUsername: "",
         textPassword: "",
         resStatusCode: ""
@@ -88,7 +89,7 @@ export default class Login extends Component {
 
       // console.log(this.state.resStatusCode)
 
-      if (this.state.resStatusCode != 200) {
+      if (this.state.resStatusCode !== 200) {
         Alert.alert('Maaf, user tidak ada\nsilahkan daftar terlebih dahulu')
 
         // this.secPrefExampleOne()

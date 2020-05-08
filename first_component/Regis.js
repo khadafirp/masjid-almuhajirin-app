@@ -3,7 +3,7 @@ import {StyleSheet, AsyncStorage, FlatList, Alert, SafeAreaView, Text, View, Tou
 import DatePicker from 'react-native-datepicker'
 import moment from "moment";
 
-var SharedPreferences = require('react-native-shared-preferences')
+// var SharedPreferences = require('react-native-shared-preferences')
 
 export default class Regis extends Component {
   
