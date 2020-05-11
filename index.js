@@ -13,6 +13,7 @@ import LandingPage from './halaman_utama/LandingPage.js'
 import Profil from "./halaman_utama/profile_page/ProfileScreen"
 import EditProfil from "./halaman_utama/profile_page/EditProfil"
 import RouterPengurus from './pengurus_masjid/RouterPengurus'
+import Sejarah from './sejarah_masjid/RouterSejarah'
 import {name as appName} from './app.json';
 
 AppRegistry.registerComponent(appName, () => App);

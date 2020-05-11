@@ -5,6 +5,7 @@ import {createAppContainer} from 'react-navigation'
 import Login from './first_component/Login'
 import Regis from './first_component/Regis'
 import Home from "./halaman_utama/LandingPage"
+import DetailProfil from './halaman_utama/profile_page/EditProfil'
 import Profil from "./halaman_utama/profile_page/ProfileScreen"
 import EditProfil from "./halaman_utama/profile_page/EditProfil"
 
@@ -38,6 +39,13 @@ const AppSwitchNavigator = createStackNavigator({
       headerShown: false
     }
   },
+  detailProfil:
+  {
+    screen: DetailProfil,
+    navigationOptions: {
+      headerShown: false
+    }
+  }
 })
 
 const AppContainer = createAppContainer(AppSwitchNavigator)

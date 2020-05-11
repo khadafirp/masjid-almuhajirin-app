@@ -10,6 +10,10 @@ var SharedPreferences = require('react-native-shared-preferences')
 
 const Stack = createStackNavigator();
 
+let splash_screen = (
+  <SplashScreen/>
+)
+
 export default class Login extends Component {
 
     state = {
@@ -87,23 +91,23 @@ export default class Login extends Component {
       )
       .finally(() => this.setState({isLoading: false}));
 
-      // console.log(this.state.resStatusCode)
+      setTimeout(() => {
+        // console.log(this.state.resStatusCode)
 
-      if (this.state.resStatusCode !== 200) {
-        Alert.alert('Maaf, user tidak ada\nsilahkan daftar terlebih dahulu')
+        if (this.state.resStatusCode !== 200) {
+          Alert.alert('Maaf, user tidak ada\nsilahkan daftar terlebih dahulu')
 
-        // this.secPrefExampleOne()
-        // this.secPrefExampleTwo()
-      }else{
-        this.props.navigation.replace('home') && 
-        this._storeData()
-      }
+          // this.secPrefExampleOne()
+          // this.secPrefExampleTwo()
+        }else{
+          this.props.navigation.replace('home')
+          this._storeData()
+        }
+      }, 1000
+      )
   }
 
   render() {
-    let splash_screen = (
-        <SplashScreen/>
-    )
 
       if(this.state.isVisible === true){
         return splash_screen    

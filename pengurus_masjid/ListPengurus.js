@@ -5,32 +5,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default class ListPengurus extends React.Component {
 
     state = {
-        data: [
-            {
-                "no": 1,
-                "image": require("../images/showpassword.png"),
-                "nama": "Bpk Bambang",
-                "jabatan": "Ketua DKM"
-            },
-            {
-                "no": 2,
-                "image": require("../images/showpassword.png"),
-                "nama": "Bpk Subroto",
-                "jabatan": "Wakil Ketua DKM"
-            },
-            {
-                "no": 3,
-                "image": require("../images/showpassword.png"),
-                "nama": "Bpk Yudhoyono",
-                "jabatan": "Sekretaris"
-            },
-            {
-                "no": 4,
-                "image": require("../images/showpassword.png"),
-                "nama": "Bpk Baskoro",
-                "jabatan": "Bendahara"
-            },
-        ],
         dataListPengurus: "",
         isLoading: false
     }

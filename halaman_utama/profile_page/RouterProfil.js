@@ -4,6 +4,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation'
 import Home from "../home_page/HomeScreen.js"
 import Regis from '../../first_component/Regis'
+import App from '../../App'
 import Profil from "../profile_page/ProfileScreen"
 import EditProfil from "../profile_page/EditProfil"
 

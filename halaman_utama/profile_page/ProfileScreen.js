@@ -4,16 +4,18 @@ import ActionSheet from 'react-native-action-sheet';
 
 var BUTTONSiOS = [
     'Edit Profil',
+    'Logout',
     'Cancel'
   ];
    
   var BUTTONSandroid = [
     'Edit Profil',
+    'logout',
     'Cancel'
   ];
    
   var DESTRUCTIVE_INDEX = 1;
-  var CANCEL_INDEX = 1;
+  var CANCEL_INDEX = 2;
 
 export default class ProfileScreen extends React.Component {
 
@@ -64,6 +66,10 @@ export default class ProfileScreen extends React.Component {
           .finally(() => this.setState({isLoading: false}));
     };
 
+    clearAsync = async () => {
+        AsyncStorage.clear()
+    }
+
     componentDidMount(){
         setTimeout(() => {
             this._retrieveData()
@@ -74,14 +80,17 @@ export default class ProfileScreen extends React.Component {
     showActionSheet = () => {
         ActionSheet.showActionSheetWithOptions({
             options: (Platform.OS == 'ios') ? BUTTONSiOS : BUTTONSandroid,
-            cancelButtonIndex: CANCEL_INDEX,
             destructiveButtonIndex: DESTRUCTIVE_INDEX,
+            cancelButtonIndex: CANCEL_INDEX,
             tintColor: 'black'
           },
           (buttonIndex) => {
             // console.log('button clicked :', buttonIndex);
             if (buttonIndex === 0) {
                 this.props.navigation.navigate('editProfil')   
+            }else if (buttonIndex === 1) {
+                this.clearAsync()
+                this.props.navigation.goBack()
             }
 
         })
