@@ -14,6 +14,7 @@ import Profil from "./halaman_utama/profile_page/ProfileScreen"
 import EditProfil from "./halaman_utama/profile_page/EditProfil"
 import RouterPengurus from './pengurus_masjid/RouterPengurus'
 import Sejarah from './sejarah_masjid/RouterSejarah'
+import JadwalMasjid from './jadwal_masjid/JadwalMasjid'
 import {name as appName} from './app.json';
 
 AppRegistry.registerComponent(appName, () => App);

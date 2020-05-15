@@ -175,6 +175,7 @@ export default class HomeScreen extends React.Component {
         <View style={{justifyContent: "center"}}>
             <View style={{flexDirection: "row"}}>
                 <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('jadwalMasjid')}
                     // onPress={() => this._retrieveData() && this._retrieveDataa()}
                     // onPress={() => this.fetchDataProfil(this.state.username, this.state.password)}
                 >

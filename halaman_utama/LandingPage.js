@@ -3,7 +3,7 @@ import {StyleSheet, FlatList, Alert, AsyncStorage, Platform, SafeAreaView, Text,
 import ActionSheet from 'react-native-action-sheet';
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs'
 import {createAppContainer} from 'react-navigation'
-import HomePage from "../halaman_utama/home_page/HomeScreen"
+import HomePage from "../halaman_utama/home_page/router_home"
 import ProfilPages from "../halaman_utama/profile_page/ProfileScreen"
 import PengurusPage from '../pengurus_masjid/RouterPengurus'
 import Regis from "../first_component/Regis.js"
@@ -24,14 +24,7 @@ import Sejarah from '../sejarah_masjid/RouterSejarah'
 class HomeScreens extends React.Component {
     render(){
         return(
-            <View style={{
-                flex: 1,
-                backgroundColor: '#FFFFFF',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}>
-                <HomePage/>
-            </View>
+            <HomePage/>
         )
     }
 }

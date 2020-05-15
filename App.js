@@ -8,6 +8,8 @@ import Home from "./halaman_utama/LandingPage"
 import DetailProfil from './halaman_utama/profile_page/EditProfil'
 import Profil from "./halaman_utama/profile_page/ProfileScreen"
 import EditProfil from "./halaman_utama/profile_page/EditProfil"
+import JadwalMasjid from './jadwal_masjid/JadwalMasjid'
+import DetailJadwal from './jadwal_masjid/DetailJadwalMasjid'
 
 class App extends React.Component {
   render() {
@@ -45,7 +47,14 @@ const AppSwitchNavigator = createStackNavigator({
     navigationOptions: {
       headerShown: false
     }
-  }
+  },
+  editProfil: 
+  {
+    screen: EditProfil,
+    navigationOptions: {
+      headerShown: false
+    }
+  },
 })
 
 const AppContainer = createAppContainer(AppSwitchNavigator)
