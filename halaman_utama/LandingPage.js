@@ -149,7 +149,7 @@ class ProfilScreen extends React.Component {
                 this.props.navigation.navigate('editProfil')   
             }else if (buttonIndex === 1) {
                 this.clearAsync()
-                this.props.navigation.replace('login')
+                this.props.navigation.replace('loginNew')
             }
 
         })

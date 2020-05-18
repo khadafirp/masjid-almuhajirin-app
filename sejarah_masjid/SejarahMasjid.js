@@ -50,7 +50,7 @@ export default class SejarahMasjid extends React.Component {
                 'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    title: "Nama"
+                    title: "Masjid"
                 }, 
                 console.log(this.state.body))
                 })

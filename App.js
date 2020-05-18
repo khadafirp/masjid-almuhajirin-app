@@ -3,6 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation'
 import Login from './first_component/Login'
+import LoginNew from './first_component/LoginNew'
 import Regis from './first_component/Regis'
 import Home from "./halaman_utama/LandingPage"
 import DetailProfil from './halaman_utama/profile_page/EditProfil'
@@ -23,6 +24,13 @@ const AppSwitchNavigator = createStackNavigator({
   login: 
     {
       screen: Login,
+      navigationOptions: {
+          headerShown: false
+      }
+    },
+  loginNew: 
+    {
+      screen: LoginNew,
       navigationOptions: {
           headerShown: false
       }

@@ -90,7 +90,7 @@ export default class ProfileScreen extends React.Component {
                 this.props.navigation.navigate('editProfil')   
             }else if (buttonIndex === 1) {
                 this.clearAsync()
-                this.props.navigation.goBack()
+                this.props.navigation.replace('loginNew')
             }
 
         })
