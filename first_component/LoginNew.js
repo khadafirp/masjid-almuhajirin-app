@@ -36,6 +36,7 @@ export default class Login extends Component {
       try {
         await AsyncStorage.setItem('username', this.state.textUsername);
         await AsyncStorage.setItem('password', this.state.textPassword);
+        await AsyncStorage.setItem('filterLogin', "1")
       } catch (error) {
         console.log(error)
       }
@@ -65,22 +66,20 @@ export default class Login extends Component {
       .catch((error) => 
         console.error(error)
       )
-      .finally(() => this.setState({isLoading: false}));
+      .finally(() => 
 
       setTimeout(() => {
-        // console.log(this.state.resStatusCode)
 
         if (this.state.resStatusCode !== 200) {
           Alert.alert('Maaf, user tidak ada\nsilahkan daftar terlebih dahulu')
 
-          // this.secPrefExampleOne()
-          // this.secPrefExampleTwo()
         }else{
           this.props.navigation.replace('home')
           this._storeData()
         }
       }, 1000
       )
+    )
   }
 
   render() {

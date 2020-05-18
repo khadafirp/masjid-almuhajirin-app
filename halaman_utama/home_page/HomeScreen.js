@@ -4,6 +4,23 @@ import { SliderBox } from "react-native-image-slider-box"
 
 var SharedPreferences = require('react-native-shared-preferences')
 
+import ActionSheet from 'react-native-action-sheet';
+
+var BUTTONSiOS = [
+    'Edit Profil',
+    'Logout',
+    'Cancel'
+  ];
+   
+  var BUTTONSandroid = [
+    'Edit Profil',
+    'logout',
+    'Cancel'
+  ];
+   
+  var DESTRUCTIVE_INDEX = 1;
+  var CANCEL_INDEX = 2;
+
 export default class HomeScreen extends React.Component {
 
     state = {
@@ -114,6 +131,25 @@ export default class HomeScreen extends React.Component {
         }, 1000
       )
     }
+
+    showActionSheet = () => {
+        ActionSheet.showActionSheetWithOptions({
+            options: (Platform.OS == 'ios') ? BUTTONSiOS : BUTTONSandroid,
+            destructiveButtonIndex: DESTRUCTIVE_INDEX,
+            cancelButtonIndex: CANCEL_INDEX,
+            tintColor: 'black'
+          },
+          (buttonIndex) => {
+            // console.log('button clicked :', buttonIndex);
+            if (buttonIndex === 0) {
+                this.props.navigation.navigate('editProfil')   
+            }else if (buttonIndex === 1) {
+                this.clearAsync()
+                this.props.navigation.replace('loginNew')
+            }
+
+        })
+    }
     
   render() {
     
@@ -155,12 +191,16 @@ export default class HomeScreen extends React.Component {
                 </View>
 
                 <View style={{width: 100, alignItems: 'flex-end', justifyContent: 'center'}}>
-                    <Image
-                        style={{height: 30, width: 30, tintColor: 'white'}}
-                        source={
-                            require('../../images/menu_dot.png')
-                        }
-                    />
+                    <TouchableOpacity
+                        onPress={() => this.showActionSheet()}
+                    >
+                        <Image
+                            style={{height: 30, width: 30, tintColor: 'white'}}
+                            source={
+                                require('../../images/menu_dot.png')
+                            }
+                        />
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import SplashScreen from './SplashScreen'
-import {StyleSheet, Alert, SafeAreaView, AsyncStorage, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
+import {StyleSheet, Alert, SafeAreaView, AsyncStorage, Text, View, TouchableOpacity, TextInput, Image, Platform} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native'
 import Regis from './Regis'
@@ -20,18 +20,10 @@ export default class Login extends Component {
         isVisible: true,
         isEnable: false,
         isLoading: false,
-        textUsername: "",
-        textPassword: "",
-        resStatusCode: ""
-    }
-    
-    componentDidMount (){
-        var that = this
-        setTimeout(function (){
-            that.setState({
-                isVisible: false
-            });
-        }, 5000)
+        textUsername: "khadafi",
+        textPassword: "123",
+        resStatusCode: "",
+        filter: ""
     }
   
     btnDisable = () => {
@@ -41,25 +33,11 @@ export default class Login extends Component {
       return true
     }
 
-    // secPrefExampleOne = () => {
-    //   SharedPreferences.setItem("username", "this.state.textUsername");
-
-      // SharedPreferences.getItem("username", function(value) {
-      //   console.log(value)
-      // })
-    // }
-
-    // secPrefExampleTwo = () => {
-    //   SharedPreferences.setItem("password", this.state.textPassword);
-    //   SharedPreferences.getItem("password", function(value) {
-    //     console.log(value)
-    //   })
-    // }
-
     _storeData = async () => {
       try {
         await AsyncStorage.setItem('username', this.state.textUsername);
         await AsyncStorage.setItem('password', this.state.textPassword);
+        await AsyncStorage.setItem('filterLogin', '1')
       } catch (error) {
         console.log(error)
       }
@@ -89,29 +67,65 @@ export default class Login extends Component {
       .catch((error) => 
         console.error(error)
       )
-      .finally(() => this.setState({isLoading: false}));
+      .finally(() => 
+        setTimeout(() => {
+            if (this.state.resStatusCode !== 200) {
+              Alert.alert('Maaf, user tidak ada\nsilahkan daftar terlebih dahulu')
 
-      setTimeout(() => {
-        // console.log(this.state.resStatusCode)
+            }else{
+              this.props.navigation.replace('home')
+              this._storeData()
+          }
+        }, 1000
+        )
+      );
+  }
 
-        if (this.state.resStatusCode !== 200) {
-          Alert.alert('Maaf, user tidak ada\nsilahkan daftar terlebih dahulu')
+  filterLogin = async () => {
+    var value = await AsyncStorage.getItem('filterLogin')
+    var username = await AsyncStorage.getItem('username')
+    var pass = await AsyncStorage.getItem('password')
+    
+    setTimeout(() => {
+      this.setState({
+        filter: value,
+        textUsername: username,
+        textPassword: pass
+      })
+      console.log("filter = " + this.state.filter)
+      console.log("username = " + this.state.textUsername);
+      console.log("password = " + this.state.textPassword);
+      
+    }, 100)
+  }
 
-          // this.secPrefExampleOne()
-          // this.secPrefExampleTwo()
-        }else{
-          this.props.navigation.replace('home')
-          this._storeData()
-        }
-      }, 1000
-      )
+  componentDidMount (){
+    var that = this
+    setTimeout(function (){
+      that._storeData()
+      that.filterLogin()
+      that.setState({
+          isVisible: false
+      });
+    }, 5000)
   }
 
   render() {
 
+    let test = (
+      setTimeout(() => {
+        this.fetchLogin(this.state.textUsername, this.state.textPassword)
+      }, 500)
+    )
+
       if(this.state.isVisible === true){
-        return splash_screen    
-      }else{
+        return splash_screen
+      }
+
+      if(this.state.filter === "1"){
+        return test
+      }
+
         return (
           <SafeAreaView style={styles.container}>
           <Image style={{width:300, height:300}} source={require('../images/masjidalmuhajirin.png')} />
@@ -156,8 +170,7 @@ export default class Login extends Component {
       {/* </View> */}
       </SafeAreaView>
       );
-      }
-    }
+  }
 }
 
 const styles = StyleSheet.create({
