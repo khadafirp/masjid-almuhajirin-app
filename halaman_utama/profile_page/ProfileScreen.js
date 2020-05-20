@@ -27,6 +27,24 @@ export default class ProfileScreen extends React.Component {
         alamatUser: "",
     }
 
+    secondStore = async () => {
+        try{
+            // await AsyncStorage.setItem('username', "");
+            // await AsyncStorage.setItem('password', "");
+            // await AsyncStorage.setItem('filterLogin', "0")
+            
+            var value = await AsyncStorage.getItem('filterLogin')
+            var valuee = await AsyncStorage.getItem('username')
+            var valueee = await AsyncStorage.getItem('password')
+
+            console.log("filter = " + value);
+            console.log("username = " + valuee);
+            console.log("username = " + valueee);
+        }catch(error){
+            console,log(error)
+        }
+      }
+
     _retrieveData = async () => {
         const value = await AsyncStorage.getItem('username');
         console.log(value);
@@ -64,11 +82,8 @@ export default class ProfileScreen extends React.Component {
           console.error(error)
           )
           .finally(() => this.setState({isLoading: false}));
-    };
 
-    clearAsync = async () => {
-        AsyncStorage.clear()
-    }
+    };
 
     componentDidMount(){
         setTimeout(() => {
@@ -89,7 +104,7 @@ export default class ProfileScreen extends React.Component {
             if (buttonIndex === 0) {
                 this.props.navigation.navigate('editProfil')   
             }else if (buttonIndex === 1) {
-                this.clearAsync()
+                this.secondStore()
                 this.props.navigation.replace('loginNew')
             }
 

@@ -20,8 +20,8 @@ export default class Login extends Component {
         isVisible: true,
         isEnable: false,
         isLoading: false,
-        textUsername: "khadafi",
-        textPassword: "123",
+        textUsername: "",
+        textPassword: "",
         resStatusCode: "",
         filter: ""
     }
@@ -81,6 +81,16 @@ export default class Login extends Component {
       );
   }
 
+  secondStore = async () => {
+    var value = await AsyncStorage.getItem('filterLogin')
+    var username = await AsyncStorage.getItem('username')
+    var pass = await AsyncStorage.getItem('password')
+
+    await AsyncStorage.setItem('username', username);
+    await AsyncStorage.setItem('password', pass);
+    await AsyncStorage.setItem('filterLogin', value)
+  }
+
   filterLogin = async () => {
     var value = await AsyncStorage.getItem('filterLogin')
     var username = await AsyncStorage.getItem('username')
@@ -102,7 +112,8 @@ export default class Login extends Component {
   componentDidMount (){
     var that = this
     setTimeout(function (){
-      that._storeData()
+      // that._storeData()
+      that.secondStore()
       that.filterLogin()
       that.setState({
           isVisible: false
@@ -112,18 +123,22 @@ export default class Login extends Component {
 
   render() {
 
-    let test = (
-      setTimeout(() => {
-        this.fetchLogin(this.state.textUsername, this.state.textPassword)
-      }, 500)
-    )
+    // let test = (
+    //   setTimeout(() => {
+    //     this.fetchLogin(this.state.textUsername, this.state.textPassword)
+    //   }, 500)
+    // )
 
       if(this.state.isVisible === true){
         return splash_screen
       }
 
-      if(this.state.filter === "1"){
-        return test
+      try{
+        if(this.state.filter === "1"){
+          this.fetchLogin(this.state.textUsername, this.state.textPassword)
+        }
+      }catch(error){
+        console.log(error)
       }
 
         return (

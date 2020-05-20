@@ -7,15 +7,13 @@ var SharedPreferences = require('react-native-shared-preferences')
 import ActionSheet from 'react-native-action-sheet';
 
 var BUTTONSiOS = [
-    'Edit Profil',
-    'Logout',
-    'Cancel'
+    'Daftar Pengguna',
+    'Batal'
   ];
    
   var BUTTONSandroid = [
-    'Edit Profil',
-    'logout',
-    'Cancel'
+    'Daftar Pengguna',
+    'Batal'
   ];
    
   var DESTRUCTIVE_INDEX = 1;
@@ -140,14 +138,7 @@ export default class HomeScreen extends React.Component {
             tintColor: 'black'
           },
           (buttonIndex) => {
-            // console.log('button clicked :', buttonIndex);
-            if (buttonIndex === 0) {
-                this.props.navigation.navigate('editProfil')   
-            }else if (buttonIndex === 1) {
-                this.clearAsync()
-                this.props.navigation.replace('loginNew')
-            }
-
+            console.log('button clicked :', buttonIndex);
         })
     }
     

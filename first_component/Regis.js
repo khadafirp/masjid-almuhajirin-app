@@ -23,6 +23,18 @@ export default class Regis extends Component {
     alamat: ""
   }
 
+  readAsync = async () => {
+    var value = await AsyncStorage.getItem('mykey')
+
+    console.log("username ku adalah = " + value)
+  }
+
+  componentDidMount(){
+    setTimeout(() => {
+      this.readAsync()
+    }, 300)
+  }
+
   handleFocus = event => {
     this.setState({isFocused: true})
 

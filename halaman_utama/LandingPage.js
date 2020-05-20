@@ -125,12 +125,31 @@ class ProfilScreen extends React.Component {
           .finally(() => this.setState({isLoading: false}));
     };
 
+    secondStore = async () => {
+        try{
+            await AsyncStorage.setItem('username', JSON.stringify(""));
+            await AsyncStorage.setItem('password', JSON.stringify(""));
+            await AsyncStorage.setItem('filterLogin', "0")
+            
+            // var value = await AsyncStorage.getItem('filterLogin')
+            // var valuee = await AsyncStorage.getItem('username')
+            // var valueee = await AsyncStorage.getItem('password')
+
+            // console.log("filter = " + value);
+            // console.log("username = " + valuee);
+            // console.log("username = " + valueee);
+        }catch(error){
+            console,log(error)
+        }
+      }
+
     clearAsync = async () => {
         AsyncStorage.clear()
     }
 
     componentDidMount(){
         setTimeout(() => {
+            // this.secondStore()
             this._retrieveData()
         }, 1000
       )
@@ -148,7 +167,7 @@ class ProfilScreen extends React.Component {
             if (buttonIndex === 0) {
                 this.props.navigation.navigate('editProfil')   
             }else if (buttonIndex === 1) {
-                this.clearAsync()
+                this.secondStore()
                 this.props.navigation.replace('loginNew')
             }
 

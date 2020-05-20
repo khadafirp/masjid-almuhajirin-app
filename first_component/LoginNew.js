@@ -82,6 +82,26 @@ export default class Login extends Component {
     )
   }
 
+  showStorage = async () => {
+    var value = await AsyncStorage.getItem('filterLogin')
+    var valuee = await AsyncStorage.getItem('username')
+    var valueee = await AsyncStorage.getItem('password')
+
+    console.log(value);
+    console.log(valuee);
+    console.log(valueee);
+  }
+
+  componentDidMount(){
+    setTimeout(() => {
+      this.showStorage()
+    }, 500);
+  }
+
+  tes = async () => {
+    await AsyncStorage.setItem("mykey", "hallo semua teman temanku")
+  }
+
   render() {
         return (
           <SafeAreaView style={styles.container}>
@@ -118,7 +138,7 @@ export default class Login extends Component {
             <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
               <Text style={styles.instructions}>Belum punya akun?</Text>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('regis')}
+                onPress={() => this.props.navigation.navigate('regis') && this.tes()}
               >
               <Text style={styles.instructionsRegister}>Daftar</Text>
               </TouchableOpacity>
