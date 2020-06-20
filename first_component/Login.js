@@ -44,7 +44,7 @@ export default class Login extends Component {
     };
 
     fetchLogin = (username, password) => {
-      fetch('http://localhost:3306/api/user', {
+      fetch('https://us-central1-fir-firebase-f7194.cloudfunctions.net/user/filterDataUser', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'

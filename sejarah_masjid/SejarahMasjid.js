@@ -16,7 +16,7 @@ export default class SejarahMasjid extends React.Component {
     }
 
     fetchDataSejarah = () => {
-        fetch('http://localhost:3306/api/dataSejarah', {
+        fetch('https://us-central1-fir-firebase-f7194.cloudfunctions.net/user/listSejarah', {
             method: "GET",
             headers: {
             'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ export default class SejarahMasjid extends React.Component {
         try{
             if (value === null || value === "") {
 
-                fetch('http://localhost:3306/api/filterSejarah', {
+                fetch('https://us-central1-fir-firebase-f7194.cloudfunctions.net/user/filterSejarah', {
                 method: "POST",
                 headers: {
                 'Content-Type': 'application/json'
@@ -67,7 +67,7 @@ export default class SejarahMasjid extends React.Component {
                 )
                 .finally(() => this.setState({isLoading: false}));
             }else{
-                fetch('http://localhost:3306/api/filterSejarah', {
+                fetch('https://us-central1-fir-firebase-f7194.cloudfunctions.net/user/filterSejarah', {
                 method: "POST",
                 headers: {
                 'Content-Type': 'application/json'

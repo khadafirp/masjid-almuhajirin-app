@@ -97,7 +97,7 @@ class ProfilScreen extends React.Component {
         this.setState({password: values})
         console.log(this.state.password)
 
-          fetch('http://localhost:3306/api/user', {
+          fetch('https://us-central1-fir-firebase-f7194.cloudfunctions.net/user/filterDataUser', {
           method: "POST",
           headers: {
           'Content-Type': 'application/json'

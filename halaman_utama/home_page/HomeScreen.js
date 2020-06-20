@@ -61,7 +61,7 @@ export default class HomeScreen extends React.Component {
           this.setState({password: values})
           console.log(this.state.password)
 
-            fetch('http://localhost:3306/api/user', {
+            fetch('https://us-central1-fir-firebase-f7194.cloudfunctions.net/user/filterDataUser', {
             method: "POST",
             headers: {
             'Content-Type': 'application/json'
@@ -74,7 +74,7 @@ export default class HomeScreen extends React.Component {
             })
             .then((response) => response.json())
             .then((responseJson) => 
-            //   console.log(responseJson.body.nama_lengkap)
+            //   console.log(responseJson.data.nama_lengkap)
             this.setState(
                 {
                 namaUser: responseJson.body.nama_lengkap,

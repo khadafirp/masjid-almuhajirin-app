@@ -14,7 +14,7 @@ export default class DetailJadwalMasjid extends React.Component{
 
     fetchDataJadwal = async () => {
         const value = await AsyncStorage.getItem('titleJadwal')
-        fetch('http://localhost:3306/api/filterDetailJadwal', {
+        fetch('https://us-central1-fir-firebase-f7194.cloudfunctions.net/user/filterDetailJadwal', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -32,7 +32,7 @@ export default class DetailJadwalMasjid extends React.Component{
                     titleJadwal: responseJson.body.title,
                     isiDetailJadwal: responseJson.body.detail_jadwal,
                     lokasi: responseJson.body.lokasi,
-                    waktu: responseJson.body.waktu_pelaksanaan
+                    waktu: responseJson.body.waktu
                 })
             )
             .catch((error) => 
