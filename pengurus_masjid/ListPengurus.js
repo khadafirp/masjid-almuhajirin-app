@@ -1,12 +1,15 @@
 import React from 'react';
 import { StyleSheet, Platform, ActivityIndicator, AsyncStorage, Text, View, TextInput, CheckBox, Image, SafeAreaView, FlatList, ScrollView, Button, Alert} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+// import filter from 'lodash.filter'
 
 export default class ListPengurus extends React.Component {
 
     state = {
         dataListPengurus: "",
-        isLoading: false
+        isLoading: false,
+        arrayholder: [],
+        array: []
     }
 
     fetchDataPengurus = () => {
@@ -41,7 +44,7 @@ export default class ListPengurus extends React.Component {
                  const value = array.sort(sortByProperty("nama_pengurus"));
                  this.setState(
                      {
-                         dataListPengurus: value
+                         array: value
                      }
                  )
 
@@ -59,7 +62,7 @@ export default class ListPengurus extends React.Component {
             )
             .finally(() => this.setState({isLoading: false}));
 
-            console.log(this.state.dataListPengurus)
+            console.log(this.state.array)
     }
 
     _storeData = async (value) => {
@@ -69,6 +72,30 @@ export default class ListPengurus extends React.Component {
           console.log(error)
         }
       };
+
+      searchData(text) {
+        const newData = this.state.array.filter(item => {
+          const itemData = item.jabatan.toLowerCase();
+          const textData = text.toLowerCase();
+          return itemData.indexOf(textData) > -1
+        });
+     
+        this.setState({
+          array: newData,
+          dataListPengurus: text
+        }),
+        console.log("data filter search = " + JSON.stringify(this.state.array));
+      }
+
+    filterCondition = (text) => {
+        setTimeout(() => {
+            if(text <= 1){
+                this.fetchDataPengurus()
+            }else{
+                this.searchData(text)   
+            }
+        }, 100)
+    }
 
     componentDidMount(){
         setTimeout(() => {
@@ -99,13 +126,22 @@ export default class ListPengurus extends React.Component {
                         </View>
                     </View> */}
 
+                    <View>
+                        <TextInput
+                            onChangeText={(text) => 
+                                this.filterCondition(text)
+                            }
+                        />
+                    </View>
+
                     <View style={{marginTop: 20}}>
                     {this.state.isLoading ? <ActivityIndicator/> : (
                         <FlatList
                         // numColumns= {2}
-                        data={this.state.dataListPengurus}
+                        data={this.state.array}
                         scrollEnabled= {false}
                         showsVerticalScrollIndicator={false}
+                        keyExtractor={ (item, index) => index.toString() }
                         renderItem={({item}) =>
                         <TouchableOpacity
                             onPress={() => this.props.navigation.navigate("DetailPengurus") && this._storeData(item.nama_pengurus)}
