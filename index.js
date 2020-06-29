@@ -16,6 +16,7 @@ import RouterPengurus from './pengurus_masjid/RouterPengurus'
 import Sejarah from './sejarah_masjid/RouterSejarah'
 import JadwalMasjid from './jadwal_masjid/JadwalMasjid'
 import Tes from './tes/Tes'
+import UplImge from './test_picture/TestPicture'
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName, () => UplImge);
